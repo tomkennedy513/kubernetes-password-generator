@@ -1,6 +1,9 @@
-package types
+package generator
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/tomkennedy513/password-gen/pkg/types"
+)
 
 type CharacterSet []rune
 
@@ -9,7 +12,7 @@ type PasswordGenerationConfig struct {
 	CharacterSet CharacterSet
 }
 
-func NewPasswordGenerationConfig(options ...Option) (*PasswordGenerationConfig, error) {
+func NewPasswordGenerationConfig(options ...types.Option) (*PasswordGenerationConfig, error) {
 	config := &PasswordGenerationConfig{}
 	for _, option := range options {
 		err := option(config)
@@ -19,6 +22,3 @@ func NewPasswordGenerationConfig(options ...Option) (*PasswordGenerationConfig, 
 	}
 	return config, nil
 }
-
-
-

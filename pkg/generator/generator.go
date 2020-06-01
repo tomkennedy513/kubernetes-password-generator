@@ -3,23 +3,22 @@ package generator
 import (
 	"crypto/rand"
 	"fmt"
-	"github.com/tomkennedy513/password-gen/pkg/types"
 	"math/big"
 )
 
 const DefaultPasswordLength int = 32
 
-var DefaultCharacterSet types.CharacterSet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+var DefaultCharacterSet CharacterSet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
 
 type Generator interface {
 	Generate() (string, error)
 }
 
 type generator struct {
-	config *types.PasswordGenerationConfig
+	config *PasswordGenerationConfig
 }
 
-func NewPasswordGenerator(config *types.PasswordGenerationConfig) Generator {
+func NewPasswordGenerator(config *PasswordGenerationConfig) Generator {
 	return &generator{
 		config: config,
 	}
@@ -28,7 +27,7 @@ func NewPasswordGenerator(config *types.PasswordGenerationConfig) Generator {
 func (g *generator) Generate() (string, error) {
 	var (
 		length       int
-		characterSet types.CharacterSet
+		characterSet CharacterSet
 		result string
 	)
 
