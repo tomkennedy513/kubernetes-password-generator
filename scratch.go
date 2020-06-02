@@ -19,4 +19,6 @@ func main() {
 	passwordGenerator := generator.NewPasswordGenerator(config)
 	generate, _ := passwordGenerator.Generate()
 	fmt.Println(generate)
+
+	lw := cache.NewListWatchFromClient()
 }
