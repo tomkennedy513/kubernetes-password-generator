@@ -32,10 +32,15 @@ bash "${CODEGEN_PKG}"/generate-groups.sh "deepcopy" \
   --go-header-file "${SCRIPT_ROOT}"/hack/boilerplate.go.txt
 
 
-bash "${CODEGEN_PKG}"/generate-groups.sh "client,informer,lister" \
-  pkg/generated github.com/tomkennedy513/password-gen/pkg/apis \
-  passwordgen:v1 \
-  --output-base "$(dirname "${BASH_SOURCE[0]}")/../" \
-  --go-header-file "${SCRIPT_ROOT}"/hack/boilerplate.go.txt
-# To use your own boilerplate text append:
-#   --go-header-file "${SCRIPT_ROOT}"/hack/custom-boilerplate.go.txt
+#bash "${CODEGEN_PKG}"/generate-groups.sh "client,informer,lister" \
+#  github.com/tomkennedy513/password-gen/pkg/generated github.com/tomkennedy513/password-gen/pkg/apis \
+#  passwordgen:v1 \
+#  --output-base "$(dirname "${BASH_SOURCE[0]}")/../" \
+#  --go-header-file "${SCRIPT_ROOT}"/hack/boilerplate.go.txt
+## To use your own boilerplate text append:
+##   --go-header-file "${SCRIPT_ROOT}"/hack/custom-boilerplate.go.txt
+#
+#rm -rf pkg/generated
+#mv github.com/tomkennedy513/password-gen/pkg/generated pkg
+#mv github.com/tomkennedy513/password-gen/pkg/apis/passwordgen/v1/zz_generated.deepcopy.go pkg/apis/passwordgen/v1/zz_generated.deepcopy.go
+#rm -rf github.com

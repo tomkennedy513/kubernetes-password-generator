@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: password-gen-controller
+  labels:
+    app: password-gen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: password-gen
+  template:
+    metadata:
+      labels:
+        app: password-gen
+    spec:
+      serviceAccountName: test-service-account
+      containers:
+        - name: password-gen
+          image: password-gen:latest
+          imagePullPolicy: Never

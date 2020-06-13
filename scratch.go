@@ -4,19 +4,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/tomkennedy513/password-gen/pkg/generator"
+	"github.com/tomkennedy513/password-gen/pkg/password"
 	"github.com/tomkennedy513/password-gen/pkg/types"
 )
 
 func main() {
 	config, err := types.NewPasswordGenerationConfig(
-		types.SetPasswordLength(500),
-		types.SetCharacterSet([]rune("pweih234")),
+		password.SetPasswordLength(500),
+		password.SetCharacterSet([]rune("pweih234")),
 		)
 	if err != nil {
 		panic(err)
 	}
-	passwordGenerator := generator.NewPasswordGenerator(config)
+	passwordGenerator := password.NewPasswordGenerator(config)
 	generate, _ := passwordGenerator.Generate()
 	fmt.Println(generate)
 
