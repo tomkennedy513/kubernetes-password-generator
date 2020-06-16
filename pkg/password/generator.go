@@ -8,7 +8,7 @@ import (
 
 const DefaultPasswordLength int = 32
 
-var DefaultCharacterSet CharacterSet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+var DefaultCharacterSet CharacterSet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()?")
 
 type Generator interface {
 	Generate() (string, error)

@@ -29,24 +29,31 @@ func (r *ReplicaSetReconciler) Reconcile(req reconcile.Request) (reconcile.Resul
 
 	spec := pw.Spec
 	result := map[string]string{}
-	
-	for _, key := range spec.Keys {
-		config, err := password.NewPasswordGenerationConfig(
-			password.SetPasswordLength(key.Length),
-			password.SetCharacterSet([]rune(key.CharacterSet)),
-		)
-		if err != nil {
-			return reconcile.Result{}, err
-		}
 
-		generator := password.NewPasswordGenerator(config)
-		pw, err := generator.Generate()
-		if err != nil {
-			return reconcile.Result{}, err
-		}
-
-		result[key.KeyName] = pw
+	config, err := password.NewPasswordGenerationConfig(
+		password.SetPasswordLength(spec.GenerationParameters.Length),
+		password.SetCharacterSet([]rune(spec.GenerationParameters.CharacterSet)),
+	)
+	if err != nil {
+		return reconcile.Result{}, err
 	}
+
+	generator := password.NewPasswordGenerator(config)
+	generatedPassword, err := generator.Generate()
+	if err != nil {
+		return reconcile.Result{}, err
+	}
+
+	result["password"] = generatedPassword
+
+	username := spec.Username
+	if username == "" {
+		username, err = generator.Generate()
+		if err != nil {
+			return reconcile.Result{}, err
+		}
+	}
+	result["username"] = username
 
 	for _, secret := range spec.Secrets {
 		namespace := "default"
@@ -93,7 +100,7 @@ func (r *ReplicaSetReconciler) createSecret(name types.NamespacedName, credentia
 			Namespace: name.Namespace,
 		},
 		StringData: credential,
-		Type:       "Opaque",
+		Type:       "kubernetes.io/basic-auth",
 	}
 
 	err := r.Client.Create(context.Background(), &secret, &client.CreateOptions{})
